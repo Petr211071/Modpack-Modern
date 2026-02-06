@@ -1,6 +1,7 @@
 {
-	"ingredient": "tfc_gurman:coffee",
-	"thirst": 15,
+	"ingredient": "tfc_gourmet:coffee",
+	"thirst": 10,
+	"may_drink_when_full": true,
 	"effects": [
 		{
 			"type": "minecraft:speed",

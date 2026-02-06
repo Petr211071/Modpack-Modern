@@ -2,7 +2,7 @@
 
 function registerTFGNuclearBlocks(event) {
 
-	// Insulation
+	// Insulation Fission Reactor
 	event.create('tfg:glacian_wool_frame')
 		.soundType('copper')
 		.hardness(4)
@@ -27,7 +27,7 @@ function registerTFGNuclearBlocks(event) {
 		.resistance(6)
 		.tagBlock('gtceu:mineable/pickaxe_or_wrench')
 
-	// Unfinished Insulation
+	// Unfinished Insulation Reactor
 	event.create('tfg:moderate_core')
 		.soundType('ancient_debris')
 		.hardness(7)
@@ -42,6 +42,34 @@ function registerTFGNuclearBlocks(event) {
 		.tagBlock('gtceu:mineable/pickaxe_or_wrench')
 		.model('tfg:block/fission/impure_moderate_core')
 
+	// Heat Battery Components
+
+	event.create('tfg:copper_sandy')
+		.soundType('ancient_debris')
+		.hardness(7)
+		.resistance(8)
+		.tagBlock('gtceu:mineable/pickaxe_or_wrench')
+		.model('tfg:block/fission/copper_sandy')
+
+	event.create('tfg:beryllium_sandy')
+		.soundType('ancient_debris')
+		.hardness(7)
+		.resistance(8)
+		.tagBlock('gtceu:mineable/pickaxe_or_wrench')
+		.model('tfg:block/fission/beryllium_sandy')
+
+	event.create('tfg:copper_sandy_frame')
+		.soundType('copper')
+		.hardness(4)
+		.resistance(6)
+		.tagBlock('gtceu:mineable/pickaxe_or_wrench')
+
+	event.create('tfg:beryllium_sandy_frame')
+		.soundType('copper')
+		.hardness(5)
+		.resistance(6)
+		.tagBlock('gtceu:mineable/pickaxe_or_wrench')
+
 	// Nuclear cooling tower
 	event.create('tfg:titanium_exhaust_vent', 'tfg:active_particle_emitter')
 		.textureAll('tfg:block/titanium_exhaust_vent')
@@ -51,12 +79,13 @@ function registerTFGNuclearBlocks(event) {
 		.tagBlock('gtceu:mineable/pickaxe_or_wrench')
 		.mapColor('color_black')
 		.speedFactor(1.1)
-		.activeOffset(2, 2, 2)
-		.activeVelocity(0.0, 0.0, 0.0)
-		.activeParticle('tfg:cooling_steam')
-		.activeBase(0.0, 13.5, 0.0)
-		.activeCount(2)
-		.activeForced(false)
+		.activeParticles(a => a
+			.range(2, 2, 2)
+			.velocity(0.0, 0.0, 0.0)
+			.particle('tfg:cooling_steam')
+			.position(0.0, 13.5, 0.0)
+			.count(2)
+			.forced(false))
 		.hasTicker(true)
 		.emitDelay(4);
 

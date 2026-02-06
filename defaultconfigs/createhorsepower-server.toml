@@ -3,13 +3,13 @@
 creatureRPMRange = 16
 #How much stress small creatures can produce for the horse crank.
 #Range: > 1
-smallCreatureStressRange = 8
+smallCreatureStressRange = 16
 #How much stress medium creatures can produce for the horse crank.
 #Range: > 1
-mediumCreatureStressRange = 12
+mediumCreatureStressRange = 24
 #How much stress large creatures can produce for the horse crank.
 #Range: > 1
-largeCreatureStressRange = 16
+largeCreatureStressRange = 32
 #The multiplier for "Poor" paths
 #Range: 0.0 ~ 1.7976931348623157E308
 poorMultiplier = 0.5
@@ -30,5 +30,5 @@ smallCreatures = ["tfc:wolf", "tfc:dog", "tfc:pig", "tfc:sheep", "tfc:goat", "tf
 #Valid "Medium" creatures
 mediumCreatures = ["tfc:cow", "tfc:donkey", "tfc:dolphin", "wan_ancient_beasts:glider", "wan_ancient_beasts:soarer"]
 #Valid "Large" creatures
-largeCreatures = ["tfc:horse", "tfc:mule", "tfc:musk_ox", "tfc:yak", "tfg:sniffer", "wan_ancient_beasts:walker", "species:cruncher"]
+largeCreatures = ["tfc:horse", "tfc:mule", "tfc:musk_ox", "tfc:yak", "tfg:sniffer", "wan_ancient_beasts:walker", "species:cruncher", "wan_ancient_beasts:charger"]
 

@@ -6,6 +6,7 @@ function removeMinecraftRecipes(event) {
 	global.MINECRAFT_DISABLED_ITEMS.forEach(item => {
 		event.remove({ input: item })
 		event.remove({ output: item })
+		TFGHelpers.clearMaterialInfo(item);
 	})
 	
 	//#region Выход: Камень
@@ -1157,7 +1158,8 @@ function removeMinecraftRecipes(event) {
 	//#endregion
 
 	//#region Выход: Кнопка из черного камня
-
+	
+	event.remove({ id: 'gtceu:shaped/stone_button' })
 	event.remove({ id: 'minecraft:polished_blackstone_button' })
 
 	//#endregion

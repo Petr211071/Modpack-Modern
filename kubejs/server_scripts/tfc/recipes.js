@@ -8,97 +8,10 @@
 const registerTFCRecipes = (event) => {
 
 	removeTFCRecipes(event)
-	registerTFCMaterialsRecipes(event)
 	registerTFCMetalsRecipes(event)
 	registerTFCDyeRecipes(event)
 
-	// Добавление рецептов
-	const TFC_QUERN_POWDER_RECIPE_COMPONENTS = /** @type {const} */ ([
-		{ input: "#forge:dusts/coke", output: "4x tfc:powder/coke", name: "coke_powder" },
-		{ input: "#forge:dusts/amethyst", output: "4x tfc:powder/amethyst", name: "amethyst_powder" },
-		{ input: "#forge:dusts/diamond", output: "4x tfc:powder/diamond", name: "diamond_powder" },
-		{ input: "#forge:dusts/emerald", output: "4x tfc:powder/emerald", name: "emerald_powder" },
-		{ input: "#forge:dusts/lapis", output: "4x tfc:powder/lapis_lazuli", name: "lapis_powder" },
-		{ input: "#forge:dusts/opal", output: "4x tfc:powder/opal", name: "opal_powder" },
-		{ input: "#forge:dusts/pyrite", output: "4x tfc:powder/pyrite", name: "pyrite_powder" },
-		{ input: "#forge:dusts/ruby", output: "4x tfc:powder/ruby", name: "ruby_powder" },
-		{ input: "#forge:dusts/sapphire", output: "4x tfc:powder/sapphire", name: "sapphire_powder" },
-		{ input: "#forge:dusts/topaz", output: "4x tfc:powder/topaz", name: "topaz_powder" },
-		{ input: "#forge:dusts/gold", output: "4x tfc:powder/native_gold", name: "gold_powder" },
-		{ input: "#forge:dusts/silver", output: "4x tfc:powder/native_silver", name: "silver_powder" },
-		{ input: "#forge:dusts/copper", output: "4x tfc:powder/native_copper", name: "copper_powder" },
-		{ input: "#forge:dusts/cassiterite", output: "4x tfc:powder/cassiterite", name: "cassiterite_powder" },
-		{ input: "#forge:dusts/bismuth", output: "4x tfc:powder/bismuthinite", name: "bismuth_powder" },
-		{ input: "#forge:dusts/garnierite", output: "4x tfc:powder/garnierite", name: "garnierite_powder" },
-		{ input: "#forge:dusts/sphalerite", output: "4x tfc:powder/sphalerite", name: "sphalerite_powder" },
-		{ input: "#forge:dusts/magnetite", output: "4x tfc:powder/magnetite", name: "magnetite_powder" },
-		{ input: "#forge:dusts/tetrahedrite", output: "4x tfc:powder/tetrahedrite", name: "tetrahedrite_powder" },
-		{ input: "#forge:dusts/malachite", output: "4x tfc:powder/malachite", name: "malachite_powder" },
-		{ input: "#forge:dusts/yellow_limonite", output: "4x tfc:powder/limonite", name: "limonite_powder" },
-		{ input: "#forge:dusts/hematite", output: "4x tfc:powder/hematite", name: "hematite_powder" },
-		{ input: "#forge:dusts/sulfur", output: "4x tfc:powder/sulfur", name: "sulfur_powder" },
-		{ input: "#forge:dusts/saltpeter", output: "4x tfc:powder/saltpeter", name: "saltpeter_powder" },
-		{ input: "#forge:dusts/salt", output: "4x tfc:powder/salt", name: "salt_powder" },
-		{ input: "#forge:dusts/graphite", output: "4x tfc:powder/graphite", name: "graphite_powder" },
-		{ input: "#forge:dusts/borax", output: "4x tfc:powder/flux", name: "flux_powder" },
-		{ input: "#forge:dusts/soda_ash", output: "4x tfc:powder/soda_ash", name: "soda_ash" },
-		{ input: "gtceu:charcoal_dust", output: "4x tfc:powder/charcoal", name: "charcoal" },
-		{ input: "tfc:ore/sylvite", output: "4x tfc:powder/sylvite", name: "sylvite" }
-	]);
-
-	TFC_QUERN_POWDER_RECIPE_COMPONENTS.forEach(element => {
-		event.recipes.gtceu.macerator(`tfg:${element.name}`)
-			.itemInputs(element.input)
-			.itemOutputs(element.output)
-			.duration(60)
-			.EUt(2)
-
-		event.recipes.tfc.quern(element.output, element.input)
-			.id(`tfg:quern/${element.name}`)
-	})
-
-	//#region Рецепты электрической теплицы
-
-	// Дерево
-	global.TFC_WOOD_TYPES.forEach(wood => {
-		generateGreenHouseRecipe(event, `8x tfc:wood/sapling/${wood}`, '#tfc:any_fresh_water', 16000, `64x tfc:wood/log/${wood}`,
-			`tfg:greenhouse/${wood}`, 'minecraft:overworld', 16, `32x tfc:wood/sapling/${wood}`, GTValues.VH[GTValues.LV])
-	})
-
-	global.AFC_SAPLINGS.forEach(x => {
-		generateGreenHouseRecipe(event, `8x afc:wood/sapling/${x.sapling}`, '#tfc:any_fresh_water', 16000, `64x ${x.log}`,
-			`tfg:greenhouse/${x.sapling}`, 'minecraft:overworld', 16, `32x afc:wood/sapling/${x.sapling}`, GTValues.VH[GTValues.LV])
-	})
-
-	// Семена фруктов
-	global.TFC_GREENHOUSE_FRUIT_RECIPE_COMPONENTS.forEach(element => {
-		generateGreenHouseRecipe(event, element.input, '#tfc:any_fresh_water', element.fluid_amount, element.output,
-			element.name, 'minecraft:overworld', 8, element.input, GTValues.VH[GTValues.LV])
-	})
-
-	// Семена овощей
-	global.TFC_GREENHOUSE_VEGETABLE_RECIPE_COMPONENTS.forEach(element => {
-		generateGreenHouseRecipe(event, element.input, '#tfc:any_fresh_water', element.fluid_amount, element.output,
-			element.name, null, 8, element.input, GTValues.VH[GTValues.LV])
-	})
-
-	// Семена ягод
-	global.TFC_GREENHOUSE_BERRY_RECIPE_COMPONENTS.forEach(element => {
-		generateGreenHouseRecipe(event, element.input, '#tfc:any_fresh_water', element.fluid_amount, element.output,
-			element.name, null, 8, element.input, GTValues.VH[GTValues.LV])
-	})
-
-	// Растения
-	Ingredient.of('#tfc:plants').subtract('#tfc:wild_fruits').stacks.forEach(element => {
-		const itemId = element.id;
-		const recipeId = `greenhouse_${itemId.replace(':', '_')}`;
-
-		generateGreenHouseRecipe(event, itemId, '#tfc:any_fresh_water', 8000, `8x ${itemId}`,
-			recipeId, null, 8, itemId, GTValues.VH[GTValues.LV]);
-	});
-
-	//#endregion
-
+	event.remove({ mod: 'tfc', type: 'tfc:casting' });
 
 	// Доменная печь
 	event.recipes.gtceu.shaped('tfc:blast_furnace', [
@@ -108,7 +21,7 @@ const registerTFCRecipes = (event) => {
 	], {
 		A: '#forge:double_plates/wrought_iron',
 		B: 'tfc:crucible'
-	}).addMaterialInfo().id('tfc:crafting/blast_furnace')
+	}).id('tfc:crafting/blast_furnace')
 
 	// Тыква -> Кусочки тыквы
 	event.recipes.tfc.advanced_shapeless_crafting(
@@ -327,4 +240,95 @@ const registerTFCRecipes = (event) => {
 		.inputs('#tfc:foods/fruits', TFC.fluidStackIngredient('#tfg:alcohols', 250))
 		.outputFluid(Fluid.of('tfc:vinegar', 250))
 		.id('tfc:barrel/vinegar')
+
+	// Clay dust to balls
+	event.recipes.tfc.barrel_sealed(8000)
+		.inputs('gtceu:clay_dust',TFC.fluidStackIngredient('minecraft:water', 250))
+		.outputItem('1x minecraft:clay_ball')
+		.id('tfc:barrel/clay_ball')
+
+	// Borax to flux
+	event.recipes.tfc.quern('4x tfc:powder/flux', 'gtceu:borax_dust')
+		.id(`tfg:quern/borax`)
+
+	event.recipes.gtceu.macerator('borax_to_flux')
+		.itemInputs("#forge:dusts/borax")
+		.itemOutputs("4x tfc:powder/flux")
+		.duration(50)
+		.EUt(2);
+
+	event.shapeless('4x tfc:fire_clay', ['tfc:fire_clay_block'])
+	
+	event.shapeless('4x tfc:kaolin_clay', ['tfc:white_kaolin_clay'])
+	event.shapeless('4x tfc:kaolin_clay', ['tfc:pink_kaolin_clay'])
+	event.shapeless('4x tfc:kaolin_clay', ['tfc:red_kaolin_clay'])
+
+	global.TFC_WOOD_TYPES.forEach(element => {
+		event.shaped(`4x tfc:wood/fallen_leaves/${element}`,[
+			'AA',
+			'AA'
+		], {
+			A: `tfc:wood/leaves/${element}`
+		}).id(`tfg:shaped/tfc/${element}_leaves_to_fallen_leaves`);
+	});
+	
+	/**
+	 * @property {string[]} krummholz_types - List of krummholz wood types.
+	 */
+	const krummholz_types = [
+		'aspen',
+		'douglas_fir',
+		'pine',
+		'spruce',
+		'white_cedar'
+	];
+	krummholz_types.forEach(type => {
+		event.shaped(`1x tfc:plant/${type}_krummholz`,[
+			'A',
+			'A'
+		], {
+			A: `tfc:wood/sapling/${type}`
+		}).id(`tfg:shaped/tfc/${type}_krummholz`);
+	});
+
+	/**
+	 * @property {Array} tfcWoodRecyclingIndex - Wood recycling material index.
+	 */
+	const tfcWoodRecyclingIndex = [
+		['tfc:wood/chest_minecart/{type}', ['{wood}', 4, GTMaterials.WroughtIron, 5]],
+		['tfc:wood/planks/{type}', ['{wood}', 8]],
+		['tfc:wood/planks/{type}_door', ['{wood}', 6]],
+		['tfc:wood/planks/{type}_trapdoor', ['{wood}', 4]],
+		['tfc:wood/planks/{type}_fence', ['{wood}', 4]],
+		['tfc:wood/planks/{type}_log_fence', ['{wood}', 8]],
+		['tfc:wood/planks/{type}_fence_gate', ['{wood}', 8]],
+		['tfc:wood/planks/{type}_slab', ['{wood}', 2]],
+		['tfc:wood/planks/{type}_stairs', ['{wood}', 3]],
+		['tfc:wood/planks/{type}_pressure_plate', ['{wood}', 4]],
+		['tfc:wood/planks/{type}_button', ['{wood}', 1]],
+		['tfc:wood/chest/{type}', ['{wood}', 16]],
+		['tfc:wood/trapped_chest/{type}', ['{wood}', 16, GTMaterials.WroughtIron, 4/9, GTMaterials.Wood, 1]]
+	];
+	/**
+	 * @param {Array} materials
+	 * @param {string} woodMaterial
+	 * @return {Array}
+	 */
+	function resolveArgs(materials, woodMaterial) {
+		return materials.map(materials => materials === '{wood}' ? woodMaterial : materials);
+	};
+	global.TFC_HARDWOOD_TYPES.forEach(type => {
+		tfcWoodRecyclingIndex.forEach(([template, args]) => {
+			const item = template.replace('{type}', type);
+			const resolvedArgs = resolveArgs(args, GTMaterials.get('hardwood'));
+			TFGHelpers.registerMaterialInfo(item, resolvedArgs);
+		});
+	});
+	global.TFC_SOFTWOOD_TYPES.forEach(type => {
+		tfcWoodRecyclingIndex.forEach(([template, args]) => {
+			const item = template.replace('{type}', type);
+			const resolvedArgs = resolveArgs(args, GTMaterials.Wood);
+			TFGHelpers.registerMaterialInfo(item, resolvedArgs);
+		});
+	});
 }

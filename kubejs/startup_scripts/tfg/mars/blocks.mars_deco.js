@@ -54,8 +54,8 @@ function registerTFGWorldGenMarsDecoBlocks(event) {
 		.soundType('crop')
 		.box(1, 0, 1, 15, 2, 15)
 		.mapColor('color_light_blue')
-		.tagItem('tfg:mars_plants')
-		.tagItem('forge:mushrooms')
+		.tagBoth('tfg:mars_plants')
+		.tagBoth('forge:mushrooms')
 		.tagBlock('tfg:do_not_destroy_in_space')
 		.tagBlock('minecraft:replaceable')
 		.tagBlock('tfc:can_be_ice_piled')
@@ -65,7 +65,7 @@ function registerTFGWorldGenMarsDecoBlocks(event) {
 		.soundType('crop')
 		.box(0, 0, 0, 16, 1, 16)
 		.mapColor('color_cyan')
-		.tagItem('tfg:mars_plants')
+		.tagBoth('tfg:mars_plants')
 		.tagBlock('tfg:do_not_destroy_in_space')
 		.tagBlock('minecraft:replaceable')
 		.tagBlock('tfc:can_be_ice_piled')
@@ -74,30 +74,30 @@ function registerTFGWorldGenMarsDecoBlocks(event) {
 
 	event.create('betterend:aurant_polypore', 'tfg:attached_decorative_plant')
 		.soundType('nether_wart')
-		.tagItem('tfg:mars_plants')
-		.tagItem('forge:mushrooms')
+		.tagBoth('tfg:mars_plants')
+		.tagBoth('forge:mushrooms')
 		.tagBlock('minecraft:replaceable')
 		.tagBlock('tfg:do_not_destroy_in_space')
 
 	event.create('betterend:purple_polypore', 'tfg:attached_decorative_plant')
 		.soundType('nether_wart')
-		.tagItem('tfg:mars_plants')
-		.tagItem('forge:mushrooms')
+		.tagBoth('tfg:mars_plants')
+		.tagBoth('forge:mushrooms')
 		.tagBlock('minecraft:replaceable')
 		.tagBlock('tfg:do_not_destroy_in_space')
 
 	event.create('betterend:filalux_wings', 'tfg:attached_decorative_plant')
 		.soundType('nether_wart')
 		.allowVertical(true)
-		.tagItem('tfg:mars_plants')
-		.tagItem('forge:mushrooms')
+		.tagBoth('tfg:mars_plants')
+		.tagBoth('forge:mushrooms')
 		.tagBlock('minecraft:replaceable')
 		.tagBlock('tfg:do_not_destroy_in_space')
 
 	event.create('betterend:bulb_moss', 'tfg:attached_decorative_plant')
 		.soundType('crop')
 		.lootItem('tfc:straw')
-		.tagItem('tfg:mars_plants')
+		.tagBoth('tfg:mars_plants')
 		.tagBlock('minecraft:replaceable')
 		.tagBlock('tfg:do_not_destroy_in_space')
 
@@ -116,7 +116,7 @@ function registerTFGWorldGenMarsDecoBlocks(event) {
 		.tagBlock('tfg:do_not_destroy_in_space')
 		.mapColor('fire')
 		.seasonalColors(false)
-		.tagItem('tfg:mars_plants')
+		.tagBoth('tfg:mars_plants')
 		.fallenLeaves(leaves => {
 			leaves.noCollision()
 			leaves.notSolid()
@@ -126,8 +126,8 @@ function registerTFGWorldGenMarsDecoBlocks(event) {
 			leaves.tagBlock('minecraft:replaceable')
 			leaves.noDynamicTinting()
 			leaves.models((modelType, generator) => {
-				if (modelType.layers != 8) {
-					generator.parent("tfc:block/groundcover/fallen_leaves_height" + modelType.height);
+				if (modelType.layers !== 8) {
+					generator.parent(`tfc:block/groundcover/fallen_leaves_height${modelType.height}`);
 					generator.texture("all", "betterend:block/cave_bush_leaves_1");
 				} else {
 					generator.parent("betterend:block/cave_bush_01");
@@ -141,7 +141,7 @@ function registerTFGWorldGenMarsDecoBlocks(event) {
 		.tagBlock('tfg:do_not_destroy_in_space')
 		.mapColor('color_orange')
 		.seasonalColors(false)
-		.tagItem('tfg:mars_plants')
+		.tagBoth('tfg:mars_plants')
 		.fallenLeaves(leaves => {
 			leaves.noCollision()
 			leaves.notSolid()
@@ -151,8 +151,8 @@ function registerTFGWorldGenMarsDecoBlocks(event) {
 			leaves.tagBlock('minecraft:replaceable')
 			leaves.noDynamicTinting()
 			leaves.models((modelType, generator) => {
-				if (modelType.layers != 8) {
-					generator.parent("tfc:block/groundcover/fallen_leaves_height" + modelType.height);
+				if (modelType.layers !== 8) {
+					generator.parent(`tfc:block/groundcover/fallen_leaves_height${modelType.height}`);
 					generator.texture("all", "betterend:block/lucernia_leaves_1");
 				} else {
 					generator.parent("betterend:block/lucernia_leaves_1");
@@ -165,7 +165,7 @@ function registerTFGWorldGenMarsDecoBlocks(event) {
 	event.create('betterend:large_amaranita_mushroom', 'tfg:tall_decorative_plant')
 		.height(3)
 		.soundType('nether_wart')
-		.tagItem('tfg:mars_plants')
+		.tagBoth('tfg:mars_plants')
 		.tagBlock('tfg:do_not_destroy_in_space')
 		.tagItem('forge:mushrooms')
 		.mapColor('fire')
@@ -173,7 +173,7 @@ function registerTFGWorldGenMarsDecoBlocks(event) {
 	event.create('betterend:lanceleaf', 'tfg:tall_decorative_plant')
 		.height(5)
 		.soundType('crop')
-		.tagItem('tfg:mars_plants')
+		.tagBoth('tfg:mars_plants')
 		.tagBlock('tfg:do_not_destroy_in_space')
 		.mapColor('color_orange')
 
@@ -240,11 +240,12 @@ function registerTFGWorldGenMarsDecoBlocks(event) {
 		.resistance(6)
 		// makes it invisible on xaeros, so people can't use it to find the deposits :)
 		.mapColor('none')
-		.particleOffset(0.3, 1.5, 0.3)
-		.particleVelocity(0, 0.05, 0)
-		.particle('electric_spark')
-		.particleCount(2)
-		.particleForced(false)
+		.particles(a => a
+			.range(0.3, 1.5, 0.3)
+			.velocity(0, 0.05, 0)
+			.particle('electric_spark')
+			.count(2)
+			.forced(false))
 		.fullBlock(true)
 		.opaque(true)
 }

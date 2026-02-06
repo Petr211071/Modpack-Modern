@@ -7,7 +7,6 @@
  */
 const registerGTCEURecipes = (event) => {
 
-	registerGTCEUMetalRecipes(event)
 	registerGTCEURecyclingRecipes(event)
 	registerGTCEuMachineRecipes(event)
 
@@ -80,7 +79,9 @@ const registerGTCEURecipes = (event) => {
 	//#endregion
 
 
-	// #region Move MV superconductor to mid-late MV instead of post-vac freezer
+	// #region Superconductor
+	
+	// Move MV superconductor to mid-late MV instead of post-vac freezer
 
 	event.remove({ id: 'gtceu:shaped/mv_chemical_bath' })
 	event.shaped('gtceu:mv_chemical_bath', [
@@ -111,6 +112,32 @@ const registerGTCEURecipes = (event) => {
 		.itemOutputs('gtceu:magnesium_diboride_ingot')
 		.duration(400)
 		.EUt(GTValues.VA[GTValues.MV])
+
+	// Move EV to after Uranium Reactor
+
+	event.remove({ id: 'gtceu:mixer/uranium_triplatinum' })
+	event.recipes.gtceu.mixer('tfg:uranium_triplatinum')
+		.itemInputs(Item.of('gtceu:uranium_dust', 1), Item.of('gtceu:platinum_dust', 3))
+		.inputFluids(Fluid.of('gtceu:radon', 10))
+		.itemOutputs(Item.of('gtceu:uranium_triplatinum_dust', 4))
+		.duration(20*10)
+		.EUt(GTValues.VA[GTValues.EV])
+		.circuit(4)
+
+	// Move Superconductor to EV and make them cheap
+
+	event.remove({ id: 'gtceu:assembler/laser_cable' })
+	event.recipes.gtceu.assembler('tfg:laser_cable')
+		.itemInputs(Item.of('gtceu:laminated_glass', 1), Item.of('2x #forge:foils/ostrum_iodide', 2))
+		.itemOutputs(Item.of('gtceu:normal_laser_pipe', 16))
+		.inputFluids(Fluid.of('gtceu:polytetrafluoroethylene', 144))
+		.duration(20*5)
+		.EUt(GTValues.VA[GTValues.EV])
+		.cleanroom(CleanroomType.CLEANROOM)
+
+	TFGHelpers.registerMaterialInfo('gtceu:normal_laser_pipe', [GTMaterials.Air, 1])
+	event.remove({ id: 'gtceu:arc_furnace/arc_normal_laser_pipe' })
+	removeMaceratorRecipe(event, 'macerate_normal_laser_pipe')
 
 	// #endregion
 
@@ -383,10 +410,15 @@ const registerGTCEURecipes = (event) => {
 		.EUt(GTValues.VA[GTValues.LV])
 
 	// Ladder consistency
+	
+	const nonAdAstraLumber = Ingredient.of('#tfc:lumber').subtract('tfg:wood/lumber/aeronos').subtract('tfg:wood/lumber/strophar');
+
 	event.replaceOutput({ id: 'gtceu:assembler/ladder' }, 'minecraft:ladder', '8x minecraft:ladder')
 
+	event.replaceInput({ id: 'tfc:crafting/vanilla/ladder' }, '#tfc:lumber', nonAdAstraLumber)
+
 	event.recipes.gtceu.assembler('tfg:ladder_from_lumber')
-		.itemInputs('#tfc:lumber')
+		.itemInputs(nonAdAstraLumber.withCount(7))
 		.itemOutputs('8x minecraft:ladder')
 		.circuit(7)
 		.duration(40)
@@ -410,12 +442,16 @@ const registerGTCEURecipes = (event) => {
 		.duration(3 * 20)
 		.EUt(GTValues.VA[GTValues.LV])
 
-	// Volcanic Glass Tube
-	event.recipes.gtceu.alloy_smelter('tfg:tube_from_volcanic_glass_batch')
-		.itemInputs('tfc:volcanic_glass_batch')
-		.notConsumable('gtceu:ball_casting_mold')
-		.itemOutputs('gtceu:glass_tube')
-		.duration(8 * 20)
-		.EUt(GTValues.VA[GTValues.LV])
-		.category(GTRecipeCategories.INGOT_MOLDING);
+	// Glass lens
+	event.recipes.gtceu.lathe('tfg:gt_glass_lens')
+		.itemInputs('#forge:plates/glass')
+		.itemOutputs('#forge:lenses/glass', '#forge:small_dusts/glass')
+		.duration(60 * 20)
+		.EUt(GTValues.VA[GTValues.MV])
+
+	// Magnetic iron
+	event.shapeless('gtceu:magnetic_iron_ingot', ['#forge:ingots/iron', '8x minecraft:redstone'])
+	event.shapeless('gtceu:magnetic_iron_plate', ['#forge:plates/iron', '8x minecraft:redstone'])
+	event.shapeless('gtceu:magnetic_iron_bolt', ['#forge:bolts/iron', '2x minecraft:redstone'])
+
 }

@@ -13,6 +13,10 @@ function registerGTCEUItemTags(event) {
         event.add("c:hidden_from_recipe_viewers", item);
     });
 
+    // Face curio slot for mask
+	event.remove("curios:head", "gtceu:face_mask")
+    event.add("curios:face", "gtceu:face_mask")
+
     // Добавление тега EMI для скрытия всех руд
     event.add("c:hidden_from_recipe_viewers", "#forge:ores");
 
@@ -44,6 +48,12 @@ function registerGTCEUItemTags(event) {
     // @ts-expect-error According to KJS docs adding tags to tags is supported.
     event.add("gtceu:molds", "#gtceu:casting_molds", "#gtceu:extruder_molds", "gtceu:empty_mold");
 
+    // Groups up concrete blocks into tags.
+    Object.entries(global.GTCEU_CONCRETE_BLOCKS).forEach(([type, ids]) => {
+        event.add(`tfg:gtceu_concrete_blocks/${type}`, ids);
+        event.add('tfg:gtceu_concrete_blocks', ids);
+    });
+  
     //greens
     event.add('tfc:compost_greens', 'gtceu:bio_chaff');
     event.add('tfc:compost_greens', 'gtceu:plant_ball');
@@ -85,6 +95,13 @@ function registerGTCEUBlockTags(event) {
     event.add("gtceu:cleanroom_doors", "ad_astra:desh_sliding_door");
     event.add("gtceu:cleanroom_doors", "ad_astra:ostrum_sliding_door");
     event.add("gtceu:cleanroom_doors", "ad_astra:calorite_sliding_door");
+    event.add("gtceu:cleanroom_doors", "ad_astra:airlock");
+
+    // Groups up concrete blocks into tags.
+    Object.entries(global.GTCEU_CONCRETE_BLOCKS).forEach(([type, ids]) => {
+        event.add(`tfg:gtceu_concrete_blocks/${type}`, ids);
+        event.add('tfg:gtceu_concrete_blocks', ids);
+    });
 }
 
 /** @param {TagEvent.Fluid} event  */
@@ -96,8 +113,18 @@ function registerGTCEUFluidTags(event) {
     event.add("c:hidden_from_recipe_viewers", "gtceu:molten_blue_steel");
     event.add("c:hidden_from_recipe_viewers", "gtceu:molten_black_bronze");
     event.add("c:hidden_from_recipe_viewers", "gtceu:molten_bismuth_bronze");
+    event.add("c:hidden_from_recipe_viewers", "gtceu:molten_rose_gold");
+    event.add("c:hidden_from_recipe_viewers", "gtceu:molten_sterling_silver");
+    event.add("c:hidden_from_recipe_viewers", "gtceu:molten_stainless_steel");
+    event.add("c:hidden_from_recipe_viewers", "gtceu:molten_manganese_phosphide");
+    event.add("c:hidden_from_recipe_viewers", "gtceu:molten_vanadium_steel");
+    event.add("c:hidden_from_recipe_viewers", "gtceu:molten_gallium_arsenide");
+    event.add("c:hidden_from_recipe_viewers", "gtceu:molten_hsla_steel");
+    event.add("c:hidden_from_recipe_viewers", "gtceu:molten_rocket_alloy_t2");
     event.add("c:hidden_from_recipe_viewers", "gtceu:damascus_steel");
     event.add("c:hidden_from_recipe_viewers", "gtceu:blaze");
     event.add("c:hidden_from_recipe_viewers", "gtceu:thorium");
-
+    
+    event.add("c:hidden_from_recipe_viewers", "tfg:molten_weak_red_steel");
+    event.add("c:hidden_from_recipe_viewers", "tfg:molten_weak_blue_steel");
 }
